@@ -1,0 +1,24 @@
+{
+    "name": "hnrazevedo/httpserver",
+    "description": "",
+    "authors": [
+        {
+            "name": "Henri Mateus Santos de Azevedo",
+            "email": "hnr.azevedo@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0"
+    },
+    "license":"MIT",
+    "autoload": {
+        "psr-4": {
+            "HnrAzevedo\\HttpServer\\":"src/"
+        }
+    }
+}
