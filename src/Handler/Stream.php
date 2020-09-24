@@ -369,6 +369,8 @@ class Stream implements StreamInterface{
                 if ($resource instanceof StreamInterface) {
                     return $resource;
                 } elseif ($resource instanceof \Iterator) {
+                    var_dump($resource);
+                    /*
                     return new PumpStream(function () use ($resource) {
                         if (!$resource->valid()) {
                             return false;
@@ -376,7 +378,7 @@ class Stream implements StreamInterface{
                         $result = $resource->current();
                         $resource->next();
                         return $result;
-                    }, $options);
+                    }, $options);*/
                 } elseif (method_exists($resource, '__toString')) {
                     return self::streamFor((string) $resource, $options);
                 }
@@ -386,7 +388,8 @@ class Stream implements StreamInterface{
         }
     
         if (is_callable($resource)) {
-            return new PumpStream($resource, $options);
+            var_dump($resource);
+            //return new PumpStream($resource, $options);
         }
     
         throw new \InvalidArgumentException('Invalid resource type: ' . gettype($resource));
