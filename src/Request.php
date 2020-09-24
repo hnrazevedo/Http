@@ -1,16 +1,16 @@
 <?php
 
-namespace HnrAzevedo\HttpServer\Handler;
+namespace HnrAzevedo\Http;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
-use HnrAzevedo\HttpServer\Helper\Helper;
+use HnrAzevedo\Http\Helper;
 
 class Request implements RequestInterface{
     use MessageTrait, Helper;
 
-    private string $method;
-    private ?string $requestTarget;
+    private string $method = '';
+    private string $requestTarget = '';
     private UriInterface $uri;
     
     public function __construct(
@@ -108,6 +108,27 @@ class Request implements RequestInterface{
         if (!is_string($method) || $method === '') {
             throw new \InvalidArgumentException('Method must be a non-empty string.');
         }
+    }
+
+    private function updateHostFromUri(): void
+    {
+        $host = $this->uri->getHost();
+
+        if ($host == '') {
+            return;
+        }
+
+        if (($port = $this->uri->getPort()) !== null) {
+            $host .= ':' . $port;
+        }
+
+        if (isset($this->headerNames['host'])) {
+            $header = $this->headerNames['host'];
+        } else {
+            $header = 'Host';
+            $this->headerNames['host'] = 'Host';
+        }
+        $this->headers = [$header => [$host]] + $this->headers;
     }
 
 }

@@ -14,7 +14,7 @@ class ComposerStaticInitbf76c7ce9aa325649c26c6925a65bb5c
         ),
         'H' => 
         array (
-            'HnrAzevedo\\HttpServer\\' => 22,
+            'HnrAzevedo\\Http\\' => 16,
         ),
     );
 
@@ -29,7 +29,7 @@ class ComposerStaticInitbf76c7ce9aa325649c26c6925a65bb5c
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
             1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'HnrAzevedo\\HttpServer\\' => 
+        'HnrAzevedo\\Http\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

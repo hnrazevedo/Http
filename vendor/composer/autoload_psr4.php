@@ -8,5 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'Psr\\Http\\Server\\' => array($vendorDir . '/psr/http-server-handler/src', $vendorDir . '/psr/http-server-middleware/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-factory/src', $vendorDir . '/psr/http-message/src'),
-    'HnrAzevedo\\HttpServer\\' => array($baseDir . '/src'),
+    'HnrAzevedo\\Http\\' => array($baseDir . '/src'),
 );

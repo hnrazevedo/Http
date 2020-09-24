@@ -1,6 +1,6 @@
 <?php
 
-namespace HnrAzevedo\HttpServer\Handler;
+namespace HnrAzevedo\Http;
 
 use Psr\Http\Message\UriInterface;
 
@@ -24,16 +24,16 @@ class Uri implements UriInterface{
 
     private const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~';
     private const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
-    private const QUERY_SEPARATORS_REPLACEMENT = ['=' => '%3D', '&' => '%26'];
 
     private string $scheme = '';
     private string $userInfo = '';
     private string $host = '';
-    private int $port = 0;
+    private ?int $port = null;
     private string $path = '';
     private string $query = '';
     private string $fragment = '';
-    private ?string $composedComponents;
+    private ?string $composedComponents = null;
+    private string $authority = '';
 
     public function __construct(string $uri = '')
     {
@@ -66,7 +66,7 @@ class Uri implements UriInterface{
         return $this->host;
     }
     
-    public function getPort(): int
+    public function getPort(): ?int
     {
         return $this->port;
     }
@@ -207,6 +207,7 @@ class Uri implements UriInterface{
             $this->composedComponents = self::composeComponents(
                 $this->scheme,
                 $this->getAuthority(),
+                $this->host,
                 $this->path,
                 $this->query,
                 $this->fragment
@@ -291,6 +292,11 @@ class Uri implements UriInterface{
         );
     }
 
+    private function rawurlencodeMatchZero(array $match): string
+    {
+        return rawurlencode($match[0]);
+    }
+
     private function filterQueryAndFragment($str): string
     {
         if (!is_string($str)) {
@@ -335,11 +341,12 @@ class Uri implements UriInterface{
             || (isset(self::DEFAULT_PORTS[$uri->getScheme()]) && $uri->getPort() === self::DEFAULT_PORTS[$uri->getScheme()]);
     }
 
-    public static function composeComponents(?string $scheme, ?string $authority, string $path, ?string $query, ?string $fragment): string
+    public static function composeComponents(?string $scheme, ?string $authority, string $host, string $path, ?string $query, ?string $fragment): string
     {
         $uri = '';
         $uri .= ($scheme != '') ? $scheme . ':' : '';
-        $uri .= ($authority != ''|| $scheme === 'file') ? '//'.$authority : '';
+        $uri .= ($authority != ''|| $scheme === 'file') ? '//'.$authority : '//';
+        $uri .= $host;
         $uri .= $path;
         $uri .= ($query != '') ? '?' . $query : '';
         $uri .= ($fragment != '') ? '#' . $fragment : '';

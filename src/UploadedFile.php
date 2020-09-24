@@ -1,6 +1,6 @@
 <?php
 
-namespace HnrAzevedo\HttpServer\Handler;
+namespace HnrAzevedo\Http;
 
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace HnrAzevedo\HttpServer\Handler;
+namespace HnrAzevedo\Http;
 
 use Psr\Http\Message\StreamInterface;
 
@@ -37,7 +37,6 @@ trait MessageTrait{
     public function getHeader($name): array
     {
         $this->throwString($name);
-        
         $header = strtolower($name);
 
         if (!isset($this->headerNames[$header])) {
@@ -45,7 +44,6 @@ trait MessageTrait{
         }
 
         $header = $this->headerNames[$header];
-
         return $this->headers[$header];
     }
     
@@ -57,11 +55,8 @@ trait MessageTrait{
     public function withHeader($name, $value)
     {
         $this->throwString($name);
-
         $clone = clone $this;
-
         $normalized = strtolower($name);
-
         $clone->headerNames[$normalized] = $name;
         $clone->headers[$name] = $value;
         return $clone;
@@ -71,9 +66,7 @@ trait MessageTrait{
     {
         $this->throwString($name);
         $clone = clone $this;
-
         $normalized = strtolower($name);
-
         $clone->headerName[$normalized] = $name;
         $clone->headers[$name] = $value;
         return $clone;
@@ -118,10 +111,7 @@ trait MessageTrait{
     private function throwString($name): void
     {
         if(!$this->hasHeader($name)){
-            throw new \InvalidArgumentException(sprintf(
-                'Header value must be scalar or null but %s provided.',
-                is_object($name) ? get_class($name) : gettype($name)
-            ));
+            throw new \InvalidArgumentException(sprintf('Header value must be scalar or null but %s provided.', is_object($name) ? get_class($name) : gettype($name) ));
         }
     }
 
