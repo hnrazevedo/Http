@@ -83,8 +83,8 @@ trait MessageTrait{
     
     public function getBody(): StreamInterface
     {
-        if(isset($this->stream)){
-            $this->stream = new Stream(' ');
+        if(!isset($this->stream)){
+            $this->stream = Stream::streamFor('');
         }
 
         return $this->stream;

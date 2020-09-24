@@ -20,4 +20,4 @@ $serverRequest = new ServerRequest('GET',$uri);
 
 
 
-var_dump($response);
+var_dump( (string) $response->getBody());
