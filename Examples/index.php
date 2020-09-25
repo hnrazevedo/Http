@@ -14,10 +14,10 @@ $stream = Stream::streamFor('aaaa');
 
 $request = new Request('GET',$uri);
 
+$header = $request->withHeader('foo', 'bar')->withAddedHeader('foo', 'baz')->getHeader('foo');
+
 $response = new Response();
 
 $serverRequest = new ServerRequest('GET',$uri);
 
 
-
-var_dump( (string) $response->getBody());
