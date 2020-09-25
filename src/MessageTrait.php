@@ -30,13 +30,11 @@ trait MessageTrait{
     
     public function hasHeader($name): bool
     {
-        $this->throwString($name);
         return isset($this->headersNames[$name]);
     }
 
     public function getHeader($name): array
     {
-        $this->throwString($name);
         $header = strtolower($name);
 
         if (!isset($this->headerNames[$header])) {
@@ -54,21 +52,26 @@ trait MessageTrait{
     
     public function withHeader($name, $value)
     {
-        $this->throwString($name);
         $clone = clone $this;
         $normalized = strtolower($name);
         $clone->headerNames[$normalized] = $name;
-        $clone->headers[$name] = $value;
+        $clone->headers[$name] = $this->normalizeHeaderValue($value);
         return $clone;
     }
     
     public function withAddedHeader($name, $value)
     {
-        $this->throwString($name);
         $clone = clone $this;
         $normalized = strtolower($name);
-        $clone->headerName[$normalized] = $name;
-        $clone->headers[$name] = $value;
+        $value = $clone->normalizeHeaderValue($value);
+
+        if (isset($clone->headerNames[$normalized])) {
+            $header = $this->headerNames[$normalized];
+            $clone->headers[$header] = array_merge($clone->headers[$header], $value);
+        } else {
+            $clone->headerNames[$normalized] = $name;
+            $clone->headers[$name] = $value;
+        }
         return $clone;
     }
     
@@ -122,6 +125,35 @@ trait MessageTrait{
             $header = (is_int($header)) ? (string) $header : $header;
             $this->heraders[$header] = $value;
         }
+    }
+
+
+
+    private function normalizeHeaderValue($value): array
+    {
+        if (!is_array($value)) {
+            return $this->trimHeaderValues([$value]);
+        }
+
+        if (count($value) === 0) {
+            throw new \InvalidArgumentException('Header value can not be an empty array.');
+        }
+
+        return $this->trimHeaderValues($value);
+    }
+
+    private function trimHeaderValues(array $values): array
+    {
+        return array_map(function ($value) {
+            if (!is_scalar($value) && null !== $value) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Header value must be scalar or null but %s provided.',
+                    is_object($value) ? get_class($value) : gettype($value)
+                ));
+            }
+
+            return trim((string) $value, " \t");
+        }, array_values($values));
     }
 
 }

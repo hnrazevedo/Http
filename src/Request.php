@@ -15,15 +15,12 @@ class Request implements RequestInterface{
     
     public function __construct(
         string $method,
-        $uri,
+        UriInterface $uri,
         array $headers = [],
         $body = null,
         string $version = '1.1'
     ) {
         $this->assertMethod($method);
-        if (!($uri instanceof UriInterface)) {
-            $uri = new Uri($uri);
-        }
 
         $this->method = strtoupper($method);
         $this->uri = $uri;
