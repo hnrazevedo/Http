@@ -25,7 +25,7 @@ trait MessageTrait{
     
     public function getHeaders(): array
     {
-        return $this->hearders;
+        return $this->headers;
     }
     
     public function hasHeader($name): bool
