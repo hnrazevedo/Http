@@ -95,7 +95,7 @@ trait MessageTrait{
 
     public function withBody(StreamInterface $body)
     {
-        if($body === $this->stream){
+        if($body === (isset($this->stream) ? $this->stream : '')){
             return $this;
         }
 
