@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace HnrAzevedo\Http;
 
 use Psr\Http\Message\UriInterface;
 
-class Uri implements UriInterface{
-
+class Uri implements UriInterface
+{
     private const HTTP_DEFAULT_HOST = 'localhost';
 
     private const DEFAULT_PORTS = [

@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace HnrAzevedo\Http;
 
 use Psr\Http\Message\StreamInterface;
 
-trait MessageTrait{
+trait MessageTrait
+{
     private string $procotol = '1.1';
     private array $headers = [];
     private array $headerNames = [];

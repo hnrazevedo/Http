@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace HnrAzevedo\Http;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
-use HnrAzevedo\Http\Helper;
 
-class Request implements RequestInterface{
-    use MessageTrait, Helper;
+class Request implements RequestInterface
+{
+    use MessageTrait;
 
     private string $method = '';
     private string $requestTarget = '';

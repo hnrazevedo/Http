@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace HnrAzevedo\Http;
 
 use Psr\Http\Message\ResponseInterface;
 
-class Response implements ResponseInterface{
+class Response implements ResponseInterface
+{
     use MessageTrait;
 
     private const PHRASES = [

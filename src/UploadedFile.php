@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace HnrAzevedo\Http;
 
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
-class UploadedFile implements UploadedFileInterface{
-
+class UploadedFile implements UploadedFileInterface
+{
     private const ERRORS = [
         UPLOAD_ERR_OK,
         UPLOAD_ERR_INI_SIZE,

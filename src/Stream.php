@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace HnrAzevedo\Http;
 
 use Psr\Http\Message\StreamInterface;
 
-class Stream implements StreamInterface{
+class Stream implements StreamInterface
+{
     private const READABLE_MODES = '/r|a\+|ab\+|w\+|wb\+|x\+|xb\+|c\+|cb\+/';
     private const WRITABLE_MODES = '/a|w|r\+|rb\+|rw|x|c/';
 
